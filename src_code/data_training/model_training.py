@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from sklearn.metrics import f1_score, precision_score, accuracy_score, recall_score
 from sklearn.svm import SVC
 
+from src_code.utils import save_object
+
 @dataclass
 class ModelTrainerConfig:
     trained_model_file_path = os.path.join("saved_models", "model.pkl")
@@ -25,7 +27,6 @@ class ModelTrainer:
             test_arr[:,:-1],
             test_arr[:,-1:].reshape(-1)
         )
-
 
         #Initiate the model 
         model = SVC()
@@ -54,6 +55,13 @@ class ModelTrainer:
 
         print('='*35)
         print('\n')
+
+        #Save the model
+        save_object(
+            file_path = os.path.join('saved_objs',"model.pkl"),
+            obj = model
+        )
+
 
     def evaluation(self,y_true, y_pred):
         """
