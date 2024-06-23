@@ -6,6 +6,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
+from src_code.data_training.model_training import ModelTrainer 
+
 @dataclass
 class DataTransform:
     def __init__(self):
@@ -39,4 +41,6 @@ class DataTransform:
 if __name__ == "__main__":
     dt = DataTransform()
     train, test = dt.data_transform()
-    print(train)
+    
+    trainer = ModelTrainer()
+    trainer.model_trainer(train,test)
