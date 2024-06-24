@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, QuantileTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
@@ -26,7 +26,7 @@ class DataTransform:
         x_pipeline = Pipeline(
             steps=[
                 ("imputer",SimpleImputer(strategy="median")),
-                ("scaler",StandardScaler())
+                ("scaler",QuantileTransformer())
             ]
         )
 
@@ -63,10 +63,3 @@ class DataTransform:
         )
 
         return train_array, test_array
-
-if __name__ == "__main__":
-    dt = DataTransform()
-    train, test = dt.data_transform()
-    
-    trainer = ModelTrainer()
-    trainer.model_trainer(train,test)
