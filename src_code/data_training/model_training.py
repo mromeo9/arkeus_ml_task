@@ -1,7 +1,7 @@
 import os
 from dataclasses import dataclass
 
-from sklearn.metrics import f1_score, precision_score, accuracy_score, recall_score
+from sklearn.metrics import precision_score, accuracy_score
 from sklearn.svm import SVC
 
 from src_code.utils import save_object
@@ -36,24 +36,20 @@ class ModelTrainer:
         y_train_pred = model.predict(X_train)
         y_test_pred = model.predict(X_test)
 
-        f1_train, accuracy_train, precision_train, recall_train = self.evaluation(y_train, y_train_pred)
-        f1_test, accuracy_test, precision_test, recall_test = self.evaluation(y_test, y_test_pred)
+        accuracy_train, precision_train = self.evaluation(y_train, y_train_pred)
+        accuracy_test, precision_test= self.evaluation(y_test, y_test_pred)
 
         print('Model performance for Training set')
-        print("- F1 score: {:.4f}".format(f1_train))
         print("- Accuracy: {:.4f}".format(accuracy_train))
         print("- Precision: {:.4f}".format(precision_train))
-        print("- Recall: {:.4f}".format(recall_train))
 
         print('----------------------------------')
     
         print('Model performance for Test set')
-        print("- F1 score: {:.4f}".format(f1_test))
         print("- Accuracy: {:.4f}".format(accuracy_test))
         print("- Precision: {:.4f}".format(precision_test))
-        print("- Recall: {:.4f}".format(recall_test))
 
-        print('='*35)
+        print('===================================')
         print('\n')
 
         #Save the model
@@ -68,8 +64,7 @@ class ModelTrainer:
         This function is for evaluating the model
 
         """
-        f1 = f1_score(y_true, y_pred, average='micro')
         accuracy = accuracy_score(y_true, y_pred)
         precision = precision_score(y_true, y_pred, average='micro')
-        recall = recall_score(y_true, y_pred, average='micro')
-        return f1, accuracy, precision, recall
+
+        return accuracy, precision
